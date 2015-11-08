@@ -3,6 +3,8 @@
 
 import numpy as np
 
+np.random.seed(314)
+
 # Feature matrix and targets
 X = np.array([[0,0,1],[0,1,1],[1,0,1],[1,1,1]])
 print X.shape
@@ -12,7 +14,7 @@ print y.shape
 def sigmoid(x,y):
     return 1/(1 + np.exp(-np.dot(x,y)))
 
-# Random initialization
+# Random initialization of first and second hidden layers
 syn0 = 2*np.random.random((3,4)) - 1
 syn1 = 2*np.random.random((4,1)) - 1
 
