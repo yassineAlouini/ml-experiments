@@ -2,6 +2,7 @@
 
 
 from ggplot import *
+import matplotlib.pylab as plt
 import pandas as pd
 import numpy as np
 
@@ -20,13 +21,13 @@ def sigmoid(x,y):
     except ValueError:
         return None
 
-
+# Generate random data and store it in a pandas data frame
 random_data = 2*np.random.random((100,2)) - 1
+data = pd.DataFrame(data=random_data, columns=['x','y'])
 
-data = pd.DataFrame( data=random_data, columns=['x','y'])
+# Add the sigmoid function output applied to the x and y columns
+data['z'] = sigmoid(data['x'], data['y'])
 
-print(data)
+data.plot()
+
 sigmoid_plot = ggplot(aes(x='y', y='y'), data=data) + geom_point()
-
-
-print(sigmoid_plot)
