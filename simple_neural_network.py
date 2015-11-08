@@ -1,5 +1,6 @@
 # This code is inspired from this post:
 # http://www.kdnuggets.com/2015/10/neural-network-python-tutorial.html?utm_content=buffer2cfea&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer
+# Python 3 code
 
 import numpy as np
 
@@ -7,23 +8,33 @@ np.random.seed(314)
 
 # Feature matrix and targets
 X = np.array([[0,0,1],[0,1,1],[1,0,1],[1,1,1]])
-print X.shape
+print(X.shape)
 y = np.array([[0,1,1,0]]).T
-print y.shape
+print(y.shape)
 
 def sigmoid(x,y):
-    return 1/(1 + np.exp(-np.dot(x,y)))
+    """
+    :param x:
+    :param y:
+    x.shape[-1] should be equal to y.shape[0].
+    Otherwise, a the dot product can't be computed.
+    :returns:  an array
+    """
+    try:
+        return 1/(1 + np.exp(-np.dot(x,y)))
+    except ValueError:
+        return None
 
 # Random initialization of first and second hidden layers
 syn0 = 2*np.random.random((3,4)) - 1
 syn1 = 2*np.random.random((4,1)) - 1
 
-print syn0.shape, syn1.shape
+print(syn0.shape, syn1.shape)
 
 # Number of back-propagation steps
 N_STEPS = 60000
 
-for step in xrange(N_STEPS):
+for step in range(N_STEPS):
     l1 = sigmoid(X, syn0)
     l2 = sigmoid(l1, syn1)
     l2_delta = (y - l2)*(l2*(1-l2))
