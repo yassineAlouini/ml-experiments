@@ -3,7 +3,7 @@
 
 # This notebook is the implementation of the [Welch Labs](http://www.welchlabs.com/) excellent video tutorials series (links inside the notebook below)
 
-# In[46]:
+# In[1]:
 
 import numpy as np
 import pandas as pd
@@ -48,7 +48,7 @@ YouTubeVideo("O-Lc26lZpKU", width=600, height=400)
 
 # ## Sigmoid 
 
-# In[18]:
+# In[2]:
 
 def sigmoid(z):
     return 1.0 / (1 + np.exp(-z))
@@ -56,7 +56,7 @@ def sigmoid(z):
 
 # ## Derivative sigmoid 
 
-# In[39]:
+# In[3]:
 
 # The derivative of the sigmoid function
 def sigmoid_prime(z):
@@ -65,7 +65,7 @@ def sigmoid_prime(z):
 
 # ## Plots
 
-# In[51]:
+# In[4]:
 
 x = np.arange(-10, 10, 0.01)
 y = sigmoid(x)
@@ -80,7 +80,7 @@ sns.despine()
 
 # # Neural network class
 
-# In[30]:
+# In[7]:
 
 class NeuralNetwork(object):
     def __init__(self):
@@ -95,4 +95,14 @@ class NeuralNetwork(object):
         self.z_3 = np.dot(self.a_2, self.W_2)
         y_hat = sigmoid(self.z_3)
         return y_hat
+    def cost_function(self, X, y):
+        return 0.5 * ((self.forward(X) - y) ** 2).mean()
+    def cost_function_prime(self, X, y):
+        self.y_hat = self.forward(X)
+        error = (y- self.yhat)
+        delta_3 = np.multiply(-error, sigmoid_prime(self.z_3))
+        dJ_dW_2 = np.dot(self.a_2.T, delta_3)
+        delta_2 = np.dot(delta_3, self.W_2.T) * sigmoid_prime(self.z_2)
+        dJ_dW_1 = np.dot(X.T, delta_2)
+        return dJ_dW_1, dJ_dW_2
 
