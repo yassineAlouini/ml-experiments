@@ -174,20 +174,23 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This notebook is the implementation of the <a href="http://www.welchlabs.com/">Welch Labs</a> excellent video tutorials series (links inside the notebook below)</p>
+<p>This notebook is the implementation of the <a href="http://www.welchlabs.com/">Welch Labs</a> excellent video tutorials series (links inside the notebook below).
+To read the original code from the videos' author, visit this link: <a href="https://github.com/stephencwelch/Neural-Networks-Demystified">https://github.com/stephencwelch/Neural-Networks-Demystified</a></p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">optimize</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">YouTubeVideo</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 </pre></div>
@@ -391,6 +394,96 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Part-V:-Numerical-gradient-checking">Part V: Numerical gradient checking<a class="anchor-link" href="#Part-V:-Numerical-gradient-checking">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s">&quot;3y_MGonQe1s&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+        <iframe
+            width="600"
+            height="400"
+            src="https://www.youtube.com/embed/3y_MGonQe1s"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Part-VI:-Training-the-NN">Part VI: Training the NN<a class="anchor-link" href="#Part-VI:-Training-the-NN">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span class="n">YouTubeVideo</span><span class="p">(</span><span class="s">&quot;uNVKNvuaoV8&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+        <iframe
+            width="600"
+            height="400"
+            src="https://www.youtube.com/embed/uNVKNvuaoV8"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="A-representation-of-the-sigmoid-function-and-its-derivative">A representation of the sigmoid function and its derivative<a class="anchor-link" href="#A-representation-of-the-sigmoid-function-and-its-derivative">&#182;</a></h1>
 </div>
 </div>
@@ -429,12 +522,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[146]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span class="c"># The derivative of the sigmoid function</span>
 <span class="k">def</span> <span class="nf">sigmoid_prime</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))))</span>
 </pre></div>
 
 </div>
@@ -453,7 +546,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[147]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
@@ -924,7 +1017,7 @@ iIgIoMJYRERERARQYSwiIiIiAqgwFhEREREB4P8DM/JzeDIu2aYAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[192]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span class="k">class</span> <span class="nc">NeuralNetwork</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -934,25 +1027,317 @@ iIgIoMJYRERERARQYSwiIiIiAqgwFhEREREB4P8DM/JzeDIu2aYAAAAASUVORK5CYII=
         <span class="bp">self</span><span class="o">.</span><span class="n">hidden_layer_size</span> <span class="o">=</span> <span class="mi">3</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">W_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_layer_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_layer_size</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">W_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_layer_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_layer_size</span><span class="p">)</span>
+        
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">z_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W_1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">a_2</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z_2</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">z_3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a_2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W_2</span><span class="p">)</span>
         <span class="n">y_hat</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z_3</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">y_hat</span>
+    
     <span class="k">def</span> <span class="nf">cost_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span><span class="p">)))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    
     <span class="k">def</span> <span class="nf">cost_function_prime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">yhat</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&#39;shape yhat&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_hat</span><span class="p">)</span>
         <span class="n">delta_3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="o">-</span><span class="n">error</span><span class="p">,</span> <span class="n">sigmoid_prime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z_3</span><span class="p">))</span>
         <span class="n">dJ_dW_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a_2</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">delta_3</span><span class="p">)</span>
         <span class="n">delta_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">delta_3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W_2</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigmoid_prime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z_2</span><span class="p">)</span>
         <span class="n">dJ_dW_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">delta_2</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">dJ_dW_1</span><span class="p">,</span> <span class="n">dJ_dW_2</span>
+    
+    <span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the W_1 and W_2 parameters into vector forms</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nn_params</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">W_1</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">W_2</span><span class="o">.</span><span class="n">ravel</span><span class="p">()))</span> 
+        <span class="k">return</span> <span class="n">nn_params</span>
+    
+    <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the W_1 and W_2 parameters (into the correct shapes) from a vector of parameters</span>
+<span class="sd">        Args: </span>
+<span class="sd">            params(ndarry): A vector containing the W_1 and W_2 parameters concatenated</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">W_1_vector</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">input_layer_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_layer_size</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">W_1_vector</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_layer_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_layer_size</span><span class="p">))</span>
+        <span class="n">W_2_vector</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_layer_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_layer_size</span><span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">W_2_vector</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_layer_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_layer_size</span><span class="p">))</span>
+
+        
+    <span class="k">def</span> <span class="nf">compute_gradients</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the cost function gradients (with regards to W_1 and W_2) and return the result</span>
+<span class="sd">        into a vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dJ_dW_1</span><span class="p">,</span> <span class="n">dJ_dW_2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_function_prime</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s">&#39;shapes&#39;</span><span class="p">,</span> <span class="n">dJ_dW_1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dJ_dW_2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">dJ_dW_1</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">dJ_dW_2</span><span class="o">.</span><span class="n">ravel</span><span class="p">()))</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Numerical-gradient-computation">Numerical gradient computation<a class="anchor-link" href="#Numerical-gradient-computation">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span class="k">def</span> <span class="nf">compute_numerical_gradient</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute a numerical approximation to the NN gradient by introducting </span>
+<span class="sd">    a small perturbation (adding and substracting epsilon)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">initial_params</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span>
+    <span class="n">num_gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">initial_params</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">perturbation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">initial_params</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">4</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">initial_params</span><span class="p">)):</span>
+        <span class="n">perturbation</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">epsilon</span>
+        <span class="n">N</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">initial_params</span> <span class="o">+</span> <span class="n">perturbation</span><span class="p">)</span>
+        <span class="n">loss_plus</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">cost_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">N</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">initial_params</span> <span class="o">-</span> <span class="n">perturbation</span><span class="p">)</span>
+        <span class="n">loss_minus</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">cost_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>     
+        <span class="n">num_gradient</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">loss_plus</span> <span class="o">-</span> <span class="n">loss_minus</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">*</span> <span class="n">epsilon</span>
+        <span class="n">perturbation</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">N</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">initial_params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">num_gradient</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span class="k">def</span> <span class="nf">test_gradient</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that the gradient is correctly implemented by comparing it to a numerical approximation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gradient</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">compute_gradient</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">numerical_gradient</span> <span class="o">=</span> <span class="n">compute_numerical_gradient</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">norm_minus</span> <span class="o">=</span> <span class="n">no</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">gradient</span> <span class="o">-</span> <span class="n">numerical_gradient</span><span class="p">)</span>
+    <span class="n">norm_plus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">gradient</span> <span class="o">+</span> <span class="n">numerical_gradient</span><span class="p">)</span>
+    <span class="n">norm_ratio</span> <span class="o">=</span> <span class="n">norm_minus</span> <span class="o">/</span> <span class="n">norm_plus</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">norm_ratio</span><span class="p">,</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Gradient-descent-(BFGS-method)">Gradient descent (<a href="https://en.wikipedia.org/wiki/Broyden%E2%80%93Fletcher%E2%80%93Goldfarb%E2%80%93Shanno_algorithm">BFGS</a> method)<a class="anchor-link" href="#Gradient-descent-(BFGS-method)">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span class="k">class</span> <span class="nc">Trainer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="n">N</span>
+    <span class="k">def</span> <span class="nf">cost_function_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A wrapper for the NN cost function that has the appropriate interface (inputs and outputs) </span>
+<span class="sd">        for the optimize.minimize scipy function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="o">.</span><span class="n">cost_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">gradient</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="o">.</span><span class="n">compute_gradients</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cost</span><span class="p">,</span> <span class="n">gradient</span>
+    
+    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">J</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="o">.</span><span class="n">cost_function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+        
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">J</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="s">&#39;disp&#39;</span><span class="p">:</span> <span class="k">True</span><span class="p">}</span>
+        <span class="n">params_0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span>
+        <span class="n">_res</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cost_function_wrapper</span><span class="p">,</span> <span class="n">params_0</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="k">True</span><span class="p">,</span> 
+                                 <span class="n">method</span><span class="o">=</span><span class="s">&#39;BFGS&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">),</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">_res</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimization_results</span> <span class="o">=</span> <span class="n">_res</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Putting-everything-together">Putting everything together<a class="anchor-link" href="#Putting-everything-together">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span class="c"># Iris data</span>
+<span class="n">iris_data</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">iris_X</span> <span class="o">=</span> <span class="n">iris_data</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">iris_y</span> <span class="o">=</span> <span class="n">iris_data</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[183]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span class="c"># Video data</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">75</span><span class="p">],</span> <span class="p">[</span><span class="mi">82</span><span class="p">],</span> <span class="p">[</span><span class="mi">93</span><span class="p">]])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[194]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span class="n">nn</span> <span class="o">=</span> <span class="n">NeuralNetwork</span><span class="p">()</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">nn</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">iris_y</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[ 0.83124372  0.83124372  0.83124372]
+ [ 0.79016733  0.79016733  0.79016733]
+ [ 0.81152078  0.81152078  0.81152078]]
+shape yhat (3, 1)
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansired">---------------------------------------------------------------------------</span>
+<span class="ansired">ValueError</span>                                Traceback (most recent call last)
+<span class="ansigreen">&lt;ipython-input-194-b72bb00f7990&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">      1</span> nn <span class="ansiyellow">=</span> NeuralNetwork<span class="ansiyellow">(</span><span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">      2</span> t <span class="ansiyellow">=</span> Trainer<span class="ansiyellow">(</span>nn<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">----&gt; 3</span><span class="ansiyellow"> </span>t<span class="ansiyellow">.</span>train<span class="ansiyellow">(</span>X<span class="ansiyellow">,</span>iris_y<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+
+<span class="ansigreen">&lt;ipython-input-52-535432f8e7bb&gt;</span> in <span class="ansicyan">train</span><span class="ansiblue">(self, X, y)</span>
+<span class="ansigreen">     23</span>         params_0 <span class="ansiyellow">=</span> self<span class="ansiyellow">.</span>N<span class="ansiyellow">.</span>get_params<span class="ansiyellow">(</span><span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">     24</span>         _res = optimize.minimize(self.cost_function_wrapper, params_0, jac=True, 
+<span class="ansigreen">---&gt; 25</span><span class="ansiyellow">                                  method=&apos;BFGS&apos;, args=(X,y), options=options, callback=self.callback)
+</span><span class="ansigreen">     26</span>         self<span class="ansiyellow">.</span>N<span class="ansiyellow">.</span>set_params<span class="ansiyellow">(</span>_res<span class="ansiyellow">.</span>X<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">     27</span>         self<span class="ansiyellow">.</span>optimization_results <span class="ansiyellow">=</span> _res<span class="ansiyellow"></span>
+
+<span class="ansigreen">/home/yassine/Envs/data-science/lib/python3.4/site-packages/scipy/optimize/_minimize.py</span> in <span class="ansicyan">minimize</span><span class="ansiblue">(fun, x0, args, method, jac, hess, hessp, bounds, constraints, tol, callback, options)</span>
+<span class="ansigreen">    436</span>         <span class="ansigreen">return</span> _minimize_cg<span class="ansiyellow">(</span>fun<span class="ansiyellow">,</span> x0<span class="ansiyellow">,</span> args<span class="ansiyellow">,</span> jac<span class="ansiyellow">,</span> callback<span class="ansiyellow">,</span> <span class="ansiyellow">**</span>options<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">    437</span>     <span class="ansigreen">elif</span> meth <span class="ansiyellow">==</span> <span class="ansiblue">&apos;bfgs&apos;</span><span class="ansiyellow">:</span><span class="ansiyellow"></span>
+<span class="ansigreen">--&gt; 438</span><span class="ansiyellow">         </span><span class="ansigreen">return</span> _minimize_bfgs<span class="ansiyellow">(</span>fun<span class="ansiyellow">,</span> x0<span class="ansiyellow">,</span> args<span class="ansiyellow">,</span> jac<span class="ansiyellow">,</span> callback<span class="ansiyellow">,</span> <span class="ansiyellow">**</span>options<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">    439</span>     <span class="ansigreen">elif</span> meth <span class="ansiyellow">==</span> <span class="ansiblue">&apos;newton-cg&apos;</span><span class="ansiyellow">:</span><span class="ansiyellow"></span>
+<span class="ansigreen">    440</span>         return _minimize_newtoncg(fun, x0, args, jac, hess, hessp, callback,
+
+<span class="ansigreen">/home/yassine/Envs/data-science/lib/python3.4/site-packages/scipy/optimize/optimize.py</span> in <span class="ansicyan">_minimize_bfgs</span><span class="ansiblue">(fun, x0, args, jac, callback, gtol, norm, eps, maxiter, disp, return_all, **unknown_options)</span>
+<span class="ansigreen">    841</span>     <span class="ansigreen">else</span><span class="ansiyellow">:</span><span class="ansiyellow"></span>
+<span class="ansigreen">    842</span>         grad_calls<span class="ansiyellow">,</span> myfprime <span class="ansiyellow">=</span> wrap_function<span class="ansiyellow">(</span>fprime<span class="ansiyellow">,</span> args<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">--&gt; 843</span><span class="ansiyellow">     </span>gfk <span class="ansiyellow">=</span> myfprime<span class="ansiyellow">(</span>x0<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">    844</span>     k <span class="ansiyellow">=</span> <span class="ansicyan">0</span><span class="ansiyellow"></span>
+<span class="ansigreen">    845</span>     N <span class="ansiyellow">=</span> len<span class="ansiyellow">(</span>x0<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+
+<span class="ansigreen">/home/yassine/Envs/data-science/lib/python3.4/site-packages/scipy/optimize/optimize.py</span> in <span class="ansicyan">function_wrapper</span><span class="ansiblue">(*wrapper_args)</span>
+<span class="ansigreen">    283</span>     <span class="ansigreen">def</span> function_wrapper<span class="ansiyellow">(</span><span class="ansiyellow">*</span>wrapper_args<span class="ansiyellow">)</span><span class="ansiyellow">:</span><span class="ansiyellow"></span>
+<span class="ansigreen">    284</span>         ncalls<span class="ansiyellow">[</span><span class="ansicyan">0</span><span class="ansiyellow">]</span> <span class="ansiyellow">+=</span> <span class="ansicyan">1</span><span class="ansiyellow"></span>
+<span class="ansigreen">--&gt; 285</span><span class="ansiyellow">         </span><span class="ansigreen">return</span> function<span class="ansiyellow">(</span><span class="ansiyellow">*</span><span class="ansiyellow">(</span>wrapper_args <span class="ansiyellow">+</span> args<span class="ansiyellow">)</span><span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">    286</span> <span class="ansiyellow"></span>
+<span class="ansigreen">    287</span>     <span class="ansigreen">return</span> ncalls<span class="ansiyellow">,</span> function_wrapper<span class="ansiyellow"></span>
+
+<span class="ansigreen">/home/yassine/Envs/data-science/lib/python3.4/site-packages/scipy/optimize/optimize.py</span> in <span class="ansicyan">derivative</span><span class="ansiblue">(self, x, *args)</span>
+<span class="ansigreen">     69</span>             <span class="ansigreen">return</span> self<span class="ansiyellow">.</span>jac<span class="ansiyellow"></span>
+<span class="ansigreen">     70</span>         <span class="ansigreen">else</span><span class="ansiyellow">:</span><span class="ansiyellow"></span>
+<span class="ansigreen">---&gt; 71</span><span class="ansiyellow">             </span>self<span class="ansiyellow">(</span>x<span class="ansiyellow">,</span> <span class="ansiyellow">*</span>args<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">     72</span>             <span class="ansigreen">return</span> self<span class="ansiyellow">.</span>jac<span class="ansiyellow"></span>
+<span class="ansigreen">     73</span> <span class="ansiyellow"></span>
+
+<span class="ansigreen">/home/yassine/Envs/data-science/lib/python3.4/site-packages/scipy/optimize/optimize.py</span> in <span class="ansicyan">__call__</span><span class="ansiblue">(self, x, *args)</span>
+<span class="ansigreen">     61</span>     <span class="ansigreen">def</span> __call__<span class="ansiyellow">(</span>self<span class="ansiyellow">,</span> x<span class="ansiyellow">,</span> <span class="ansiyellow">*</span>args<span class="ansiyellow">)</span><span class="ansiyellow">:</span><span class="ansiyellow"></span>
+<span class="ansigreen">     62</span>         self<span class="ansiyellow">.</span>x <span class="ansiyellow">=</span> numpy<span class="ansiyellow">.</span>asarray<span class="ansiyellow">(</span>x<span class="ansiyellow">)</span><span class="ansiyellow">.</span>copy<span class="ansiyellow">(</span><span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">---&gt; 63</span><span class="ansiyellow">         </span>fg <span class="ansiyellow">=</span> self<span class="ansiyellow">.</span>fun<span class="ansiyellow">(</span>x<span class="ansiyellow">,</span> <span class="ansiyellow">*</span>args<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">     64</span>         self<span class="ansiyellow">.</span>jac <span class="ansiyellow">=</span> fg<span class="ansiyellow">[</span><span class="ansicyan">1</span><span class="ansiyellow">]</span><span class="ansiyellow"></span>
+<span class="ansigreen">     65</span>         <span class="ansigreen">return</span> fg<span class="ansiyellow">[</span><span class="ansicyan">0</span><span class="ansiyellow">]</span><span class="ansiyellow"></span>
+
+<span class="ansigreen">&lt;ipython-input-52-535432f8e7bb&gt;</span> in <span class="ansicyan">cost_function_wrapper</span><span class="ansiblue">(self, params, X, y)</span>
+<span class="ansigreen">      9</span>         self<span class="ansiyellow">.</span>N<span class="ansiyellow">.</span>set_params<span class="ansiyellow">(</span>params<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">     10</span>         cost <span class="ansiyellow">=</span> self<span class="ansiyellow">.</span>N<span class="ansiyellow">.</span>cost_function<span class="ansiyellow">(</span>X<span class="ansiyellow">,</span>y<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">---&gt; 11</span><span class="ansiyellow">         </span>gradient <span class="ansiyellow">=</span> self<span class="ansiyellow">.</span>N<span class="ansiyellow">.</span>compute_gradients<span class="ansiyellow">(</span>X<span class="ansiyellow">,</span> y<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">     12</span>         <span class="ansigreen">return</span> cost<span class="ansiyellow">,</span> gradient<span class="ansiyellow"></span>
+<span class="ansigreen">     13</span> <span class="ansiyellow"></span>
+
+<span class="ansigreen">&lt;ipython-input-192-34526ae2d1e6&gt;</span> in <span class="ansicyan">compute_gradients</span><span class="ansiblue">(self, X, y)</span>
+<span class="ansigreen">     52</span>         into a vector<span class="ansiyellow"></span>
+<span class="ansigreen">     53</span>         &quot;&quot;&quot;
+<span class="ansigreen">---&gt; 54</span><span class="ansiyellow">         </span>dJ_dW_1<span class="ansiyellow">,</span> dJ_dW_2 <span class="ansiyellow">=</span> self<span class="ansiyellow">.</span>cost_function_prime<span class="ansiyellow">(</span>X<span class="ansiyellow">,</span> y<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">     55</span>         print<span class="ansiyellow">(</span><span class="ansiblue">&apos;shapes&apos;</span><span class="ansiyellow">,</span> dJ_dW_1<span class="ansiyellow">.</span>shape<span class="ansiyellow">,</span> dJ_dW_2<span class="ansiyellow">.</span>shape<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">     56</span>         <span class="ansigreen">return</span> np<span class="ansiyellow">.</span>concatenate<span class="ansiyellow">(</span><span class="ansiyellow">(</span>dJ_dW_1<span class="ansiyellow">.</span>ravel<span class="ansiyellow">(</span><span class="ansiyellow">)</span><span class="ansiyellow">,</span> dJ_dW_2<span class="ansiyellow">.</span>ravel<span class="ansiyellow">(</span><span class="ansiyellow">)</span><span class="ansiyellow">)</span><span class="ansiyellow">)</span><span class="ansiyellow"></span>
+
+<span class="ansigreen">&lt;ipython-input-192-34526ae2d1e6&gt;</span> in <span class="ansicyan">cost_function_prime</span><span class="ansiblue">(self, X, y)</span>
+<span class="ansigreen">     24</span>         delta_3 <span class="ansiyellow">=</span> np<span class="ansiyellow">.</span>multiply<span class="ansiyellow">(</span><span class="ansiyellow">-</span>error<span class="ansiyellow">,</span> sigmoid_prime<span class="ansiyellow">(</span>self<span class="ansiyellow">.</span>z_3<span class="ansiyellow">)</span><span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">     25</span>         dJ_dW_2 <span class="ansiyellow">=</span> np<span class="ansiyellow">.</span>dot<span class="ansiyellow">(</span>self<span class="ansiyellow">.</span>a_2<span class="ansiyellow">.</span>T<span class="ansiyellow">,</span> delta_3<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">---&gt; 26</span><span class="ansiyellow">         </span>delta_2 <span class="ansiyellow">=</span> np<span class="ansiyellow">.</span>dot<span class="ansiyellow">(</span>delta_3<span class="ansiyellow">,</span> self<span class="ansiyellow">.</span>W_2<span class="ansiyellow">.</span>T<span class="ansiyellow">)</span> <span class="ansiyellow">*</span> sigmoid_prime<span class="ansiyellow">(</span>self<span class="ansiyellow">.</span>z_2<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">     27</span>         dJ_dW_1 <span class="ansiyellow">=</span> np<span class="ansiyellow">.</span>dot<span class="ansiyellow">(</span>X<span class="ansiyellow">.</span>T<span class="ansiyellow">,</span> delta_2<span class="ansiyellow">)</span><span class="ansiyellow"></span>
+<span class="ansigreen">     28</span>         <span class="ansigreen">return</span> dJ_dW_1<span class="ansiyellow">,</span> dJ_dW_2<span class="ansiyellow"></span>
+
+<span class="ansired">ValueError</span>: shapes (3,3) and (1,3) not aligned: 3 (dim 1) != 1 (dim 0)</pre>
+</div>
+</div>
+
 </div>
 </div>
 
