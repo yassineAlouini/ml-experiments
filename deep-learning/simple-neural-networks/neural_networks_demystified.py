@@ -61,6 +61,13 @@ YouTubeVideo("3y_MGonQe1s", width=600, height=400)
 YouTubeVideo("uNVKNvuaoV8", width=600, height=400)
 
 
+# ## Part VII: Overfitting, testing and regualarization
+
+# In[110]:
+
+YouTubeVideo("S4ZUwgesjS8", width=600, height=400)
+
+
 # # A representation of the sigmoid function and its derivative 
 
 # ## Sigmoid 
@@ -237,14 +244,23 @@ class Trainer(object):
         self.optimization_results = _res
 
 
+# In[112]:
+
+def plot_cost_vs_iterations(trainer):
+    fig, ax = plt.subplots(1,1)
+    ax.plot(trainer.J)
+    ax.set_xlabel('Iterrations')
+    ax.set_ylabel('Cost')
+
+
 # # Putting everything together for the training step
 
-# In[74]:
+# In[117]:
 
 # Iris data
 iris_data = load_iris()
 iris_X = iris_data.data[0:3, 0:2]
-iris_y = np.array([[l] for l in iris_y], dtype=float) # Some shape tweaking so that it works with the NN
+iris_y = np.array([[l] for l in iris_data.target[0:3]], dtype=float) # Some shape tweaking so that it works with the NN
 
 
 # In[34]:
@@ -269,14 +285,14 @@ test_gradient(nn, X,y)
 
 # ## With the video provided data
 
-# In[48]:
+# In[113]:
 
-get_ipython().run_cell_magic('time', '', 'nn = NeuralNetwork()\nt = Trainer(nn)\nt.train(X,y)')
+get_ipython().run_cell_magic('time', '', 'nn = NeuralNetwork()\nt = Trainer(nn)\nt.train(X,y)\nplot_cost_vs_iterations(t)')
 
 
 # ## With the iris data set
 
-# In[73]:
+# In[119]:
 
-get_ipython().run_cell_magic('time', '', 'nn = NeuralNetwork()\nt = Trainer(nn)\nt.train(iris_X,iris_y)')
+get_ipython().run_cell_magic('time', '', 'nn = NeuralNetwork()\nt = Trainer(nn)\nt.train(iris_X,iris_y)\nplot_cost_vs_iterrations(t)')
 
