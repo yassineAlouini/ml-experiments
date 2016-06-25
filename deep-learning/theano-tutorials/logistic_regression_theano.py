@@ -4,7 +4,7 @@
 # In this notebook, a **logistic regression** will be performed.
 # This notebook is inspired from this page: http://deeplearning.net/software/theano/tutorial/examples.html
 
-# In[13]:
+# In[1]:
 
 import theano
 import theano.tensor as T
@@ -17,21 +17,21 @@ get_ipython().magic('matplotlib inline')
 
 # # Define the logistic function
 
-# In[14]:
+# In[2]:
 
 x = T.dmatrix('x')
 s = 1 / (1 + T.exp(-x))
 logistic = theano.function([x], s)
 
 
-# In[15]:
+# In[3]:
 
 logistic([[0, 1], [-1, -2]])
 
 
 # # Logistic regression 
 
-# In[25]:
+# In[4]:
 
 N = 400                                   # training sample size
 feats = 784                               # number of input variables
