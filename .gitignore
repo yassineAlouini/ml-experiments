@@ -59,3 +59,8 @@ target/
 # Jupyter notebooks
 
 *.ipynb_checkpoints
+
+# Data sources
+
+deep-learning/keras-tutorials/data
+deep-learning/keras-tutorials/preview
