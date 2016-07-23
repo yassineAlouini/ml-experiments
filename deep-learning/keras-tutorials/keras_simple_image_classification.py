@@ -1,15 +1,23 @@
 
 # coding: utf-8
 
-# This notebook contains a simple image classification model using the [MNIST](http://yann.lecun.com/exdb/mnist/) data. <br>
+# This notebook contains a *simple* **image classification convolutional neural network** using the [MNIST](http://yann.lecun.com/exdb/mnist/) data. <br>
+# It is highly recommended to read the following [blog post](https://dsotb.quora.com/Deep-learning-with-Keras-simple-image-classification) while going through the notebook.<br>
+# Enjoy!
 
-# In[43]:
+# In[158]:
+
+## Keras related imports
 
 from keras.datasets import mnist
 from keras.models import Sequential, model_from_json
 from keras.layers import Activation, Dropout, Flatten, Dense, Convolution2D, MaxPooling2D
 from keras.utils import np_utils, data_utils, visualize_util
 from keras.preprocessing.image import load_img, img_to_array
+
+## Other data science libraries
+
+import numpy as np
 import pandas as pd
 import json
 from PIL import Image
@@ -141,6 +149,11 @@ visualize_util.plot(loaded_model,
                     to_file='simple_image_classification_architecture.png', show_shapes=True)
 
 
+# In[159]:
+
+load_img('simple_image_classification_architecture.png')
+
+
 # ### Model training and evaluation
 
 # In[16]:
@@ -200,31 +213,27 @@ predictions = model.predict_classes(X_test)
 (predictions == y_test).sum() / len(predictions)
 
 
-# ### Make prediction on an unseen image
+# ### Make prediction on unseen images
 
-# In[26]:
+# In[101]:
 
-X_test_example = X_test[0, :, : ,:].reshape(1, 1, img_rows, img_cols)
-
-
-# In[ ]:
-
-hand_written_digit = 
-
-
-# In[ ]:
-
-X_test_example.
+### Load, resize, scale and reshape the new digit image (the output is a 4D array)
+def load_resize_scale_reshape(img_path):
+    img = load_img(img_path, grayscale=True, target_size=(img_rows, img_cols))
+    array_img = img_to_array(img) / 255.0
+    reshaped_array_img = array_img.reshape(1, *array_img.shape)
+    return  reshaped_array_img
 
 
-# In[27]:
+# In[156]:
 
-loaded_model.predict(X_test_example)
+two = load_resize_scale_reshape('data/digits/2.png')
+five = load_resize_scale_reshape('data/digits/5.png')
+images_list = [two, five]
+digits = np.stack(images_list).reshape(len(images_list), *six.shape[1:])
 
 
-# In[ ]:
+# In[157]:
 
-X_test = X_test.reshape(X_test.shape[0], 1, img_rows, img_cols)
-X_train = X_train.astype('float32')
-X_test = X_test.astype('float32')
+loaded_model.predict_classes(digits)
 
