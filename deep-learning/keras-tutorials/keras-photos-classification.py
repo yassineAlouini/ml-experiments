@@ -8,7 +8,7 @@
 # Notice that you will need to install the requirements in the `requirements.txt` file by running: <br>
 #     `pip install -r requirements.txt`
 
-# In[40]:
+# In[2]:
 
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
 from keras.models import Sequential
@@ -21,7 +21,7 @@ import h5py
 
 # ## Images preprocessing
 
-# In[5]:
+# In[3]:
 
 datagen = ImageDataGenerator(
         rotation_range=40,
@@ -36,13 +36,13 @@ datagen = ImageDataGenerator(
 
 # ### An example of an image transformation for data augmentation
 
-# In[23]:
+# In[4]:
 
 img = load_img('data/train/cats/cat.0.jpg')  # this is a PIL image
 img
 
 
-# In[14]:
+# In[7]:
 
 x = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
 x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
@@ -57,15 +57,15 @@ for batch in datagen.flow(x, batch_size=1,
         break  # otherwise the generator would loop indefinitely
 
 
-# In[22]:
+# In[9]:
 
-transformed_img = load_img('preview/cat_0_1582.jpeg')  # this is a transformed cat image
+transformed_img = load_img('preview/cat_0_1558.jpeg')  # this is a transformed cat image
 transformed_img
 
 
 # ## Building the model
 
-# In[25]:
+# In[10]:
 
 model = Sequential()
 model.add(Convolution2D(32, 3, 3, input_shape=(3, 150, 150)))
@@ -92,7 +92,7 @@ model.add(Activation('sigmoid'))
 # ## Compiling the model
 # 
 
-# In[26]:
+# In[11]:
 
 model.compile(loss='binary_crossentropy',
               optimizer='rmsprop',
@@ -101,7 +101,7 @@ model.compile(loss='binary_crossentropy',
 
 # ## Train and test pipelines
 
-# In[18]:
+# In[12]:
 
 # this is the augmentation configuration we will use for training
 train_datagen = ImageDataGenerator(
@@ -133,7 +133,7 @@ validation_generator = test_datagen.flow_from_directory(
 
 # ## Fit the model
 
-# In[31]:
+# In[ ]:
 
 model.fit_generator(
         train_generator,
@@ -143,7 +143,9 @@ model.fit_generator(
         nb_val_samples=800)
 
 
-# In[41]:
+# In[8]:
 
 model.save_weights('first_try.h5')  # always save your weights after training or during training
 
+
+# ## Use the fitted model
